@@ -1,0 +1,12 @@
+[
+  {
+    "restaurant": "Sushi Place",
+    "cuisine": "Japanese",
+    "rating": 4.6,
+    "prep_time": 18,
+    "delivery_time": 22,
+    "order_cost": 32,
+    "is_weekend": true,
+    "customer_type": "returning"
+  }
+]
