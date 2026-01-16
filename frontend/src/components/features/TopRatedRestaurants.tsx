@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import type { TopRestaurant } from "../../types/metrics"
-import BarChart from "../charts/BarChart"
+import { RestaurantTable } from "./RestaurantTable"
+// import BarChart from "../charts/BarChart"
 interface CustomerChartProps {
   selectedCuisine: string | null
   selectedDay: string | null
@@ -25,16 +26,9 @@ const TopRatedRestaurants: React.FC<CustomerChartProps> = ({ selectedCuisine, se
   }, [selectedCuisine, selectedDay]);
 
   return (
-    <div className="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0">
-      <div className="w-full md:w-1/2 h-80 md:h-96">
-        <h2 className="text-xl font-semibold mb-2 text-center">Top-Rated Restaurants</h2>
-        <BarChart data={topRatedData} metric="rating" />
-      </div>
-      <div className="w-full md:w-1/2 h-80 md:h-96">
-        <h2 className="text-xl font-semibold mb-2 text-center">Cooking Time (Minutes)</h2>
-        <BarChart data={topRatedData} metric="prep_time" />
-      </div>
-    </div>
+    // <div className="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0">
+      <RestaurantTable topRatedData={topRatedData}></RestaurantTable>
+    // </div>
   )
 }
 

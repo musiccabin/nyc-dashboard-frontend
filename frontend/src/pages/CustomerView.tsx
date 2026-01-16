@@ -3,7 +3,6 @@ import '../App.css'
 
 import BusinessButton from '../components/buttons/BusinessButton'
 import TopRatedRestaurants from '../components/features/TopRatedRestaurants'
-// import FastestRestaurants from '../components/features/FastestRestaurants'
 
 import Filters from "../components/Filters"
 import { predict } from "../ml/predict"

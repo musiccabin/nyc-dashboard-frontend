@@ -40,3 +40,26 @@
 .read-the-docs {
   color: #888;
 }
+
+@media (max-width: 640px) {
+  table, thead, tbody, tr, th, td {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem;
+  }
+
+  td {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+}
