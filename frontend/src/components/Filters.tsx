@@ -16,48 +16,7 @@ const Filters: React.FC<FilterProps> = ({
 }: FilterProps) => {
 
   return (
-    <div className="flex flex-col gap-4 mb-4">
-      {/* Cuisine */}
-      <div>
-        <span className="font-semibold">Cuisine</span>
-        <div className="flex gap-2 mt-1">
-          <button
-            className="text-sm px-2 py-1 border rounded bg-gray-100 hover:bg-gray-200"
-            onClick={() => setSelectedCuisines([])}
-          >
-            Clear all
-          </button>
-
-          <button
-            className="text-sm px-2 py-1 border rounded bg-gray-100 hover:bg-gray-200"
-            onClick={() => setSelectedCuisines(cuisineOptions)}
-          >
-            Select all
-          </button>
-        </div>
-        <div className="flex flex-wrap gap-2 mt-1">
-          {cuisineOptions.map(c => (
-            <button
-              key={c}
-              className={`px-3 py-1 border rounded ${
-                selectedCuisines.includes(c) ? "bg-blue-500 text-white" : "bg-white text-gray-700"
-              }`}
-              onClick={() => {
-                if (selectedCuisines.includes(c)) {
-                  // Deselect
-                  setSelectedCuisines(selectedCuisines.filter(x => x !== c))
-                } else {
-                  // Select
-                  setSelectedCuisines([...selectedCuisines, c])
-                }
-              }}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-      </div>
-
+    <div className="flex flex-col gap-4 p-8 sticky top-0 h-screen overflow-auto">
       {/* Rating */}
       <div>
         <span className="font-semibold">Rating</span>
@@ -87,34 +46,49 @@ const Filters: React.FC<FilterProps> = ({
         />
         <div className="text-sm mt-1">Up to ${selectedCost}</div>
       </div>
+
+      {/* Cuisine */}
+      <div>
+        <span className="font-semibold">Cuisine</span>
+        <div className="flex gap-2 mt-1">
+          <button
+            className="text-sm px-2 py-1 border rounded bg-gray-100 hover:bg-gray-200"
+            onClick={() => setSelectedCuisines([])}
+          >
+            Clear all
+          </button>
+
+          <button
+            className="text-sm px-2 py-1 border rounded bg-gray-100 hover:bg-gray-200"
+            onClick={() => setSelectedCuisines(cuisineOptions)}
+          >
+            Select all
+          </button>
+        </div>
+        <div className="flex flex-wrap gap-2 mt-1">
+          {cuisineOptions.map(c => (
+            <button
+              key={c}
+              className={`text-sm px-3 py-1 border rounded ${
+                selectedCuisines.includes(c) ? "bg-blue-500 text-white" : "bg-white text-gray-700"
+              }`}
+              onClick={() => {
+                if (selectedCuisines.includes(c)) {
+                  // Deselect
+                  setSelectedCuisines(selectedCuisines.filter(x => x !== c))
+                } else {
+                  // Select
+                  setSelectedCuisines([...selectedCuisines, c])
+                }
+              }}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
+  )
+}
 
-    // <div className="flex space-x-4">
-    //   <select value={selectedCuisine ?? ""} onChange={(e) => setSelectedCuisine(e.target.value || null)}>
-    //     <option value="">All Cuisines</option>
-    //     <option value="American">American</option>
-    //     <option value="Chinese">Chinese</option>
-    //     <option value="French">French</option>
-    //     <option value="Indian">Indian</option>
-    //     <option value="Italian">Italian</option>
-    //     <option value="Japanese">Japanese</option>
-    //     <option value="Korean">Korean</option>
-    //     <option value="Mediterranean">Mediterranean</option>
-    //     <option value="Mexican">Mexican</option>
-    //     <option value="Middle Eastern">Middle Eastern</option>
-    //     <option value="Southern">Southern</option>
-    //     <option value="Spanish">Spanish</option>
-    //     {/* <option value="Thai">Thai</option>
-    //     <option value="Vietnamese">Vietnamese</option> */}
-    //   </select>
-
-    //   <select value={selectedDay ?? ""} onChange={(e) => setSelectedDay(e.target.value || null)}>
-    //     <option value="">Any Day</option>
-    //     <option value="Weekday">Weekday</option>
-    //     <option value="Weekend">Weekend</option>
-    //   </select>
-    // </div>
-  );
-};
-
-export default Filters;
+export default Filters

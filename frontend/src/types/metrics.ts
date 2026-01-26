@@ -6,3 +6,5 @@ export type TopRestaurant = {
   cuisine: string,
   higher_day: string
 }
+
+export type SortKey = "avg_rating" | "avg_prep_time"
