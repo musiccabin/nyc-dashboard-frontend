@@ -7,8 +7,8 @@ import { cuisineOptions } from "../constants/customerView"
 export function useTopRatedRestaurants(initialData: TopRestaurant[]) {
   const [topRatedData, setTopRatedData] = useState<TopRestaurant[]>(initialData)
   const [selectedCuisines, setSelectedCuisines] = useState<string[]>(cuisineOptions)
-  const [selectedRating, setSelectedRating] = useState<number>(4)
-  const [selectedCost, setSelectedCost] = useState<number>(60)
+  const [selectedRating, setSelectedRating] = useState<number>(4.5)
+  const [selectedCost, setSelectedCost] = useState<number>(40)
   const [sortKey, setSortKey] = useState<SortKey>("avg_rating")
   const [visibleCount, setVisibleCount] = useState<number>(10)
 

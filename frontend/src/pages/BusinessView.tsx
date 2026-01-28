@@ -5,7 +5,7 @@ import '../App.css'
 import BarChart from "../components/charts/PlotlyBarChart"
 import ScatterPlot from "../components/charts/ScatterPlot"
 import  BoxPlot from '../components/charts/BoxPlot'
-import Filters from "../components/Filters"
+import Filters from "../components/filters/Filters"
 import { predict } from "../ml/predict"
 
 const App: React.FC = () => {

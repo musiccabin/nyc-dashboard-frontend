@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useTopRatedRestaurants } from "../../hooks/useTopRatedRestaurants"
 
 import { RestaurantTable } from "../tables/RestaurantTable"
-import Filters from "../../components/Filters"
+import Filters from "../filters/Filters"
 import { SortControls } from "../SortControls"
 
 const TopRatedRestaurants: React.FC = () => {
@@ -25,10 +25,10 @@ const TopRatedRestaurants: React.FC = () => {
   } = useTopRatedRestaurants([])
 
   return (
-    <div className="flex gap-16 relative">
+    <div className="flex gap-12 relative">
 
       {/* Desktop filters sidebar */}
-      <div className="hidden lg:block w-1/3 border-r p-4">
+      <div className="hidden lg:block w-1/3 p-4">
         <h2 className="font-semibold text-xl">Filters</h2>
         <Filters
           selectedCuisines={selectedCuisines}
@@ -40,12 +40,14 @@ const TopRatedRestaurants: React.FC = () => {
         />
       </div>
 
+      <div className="hidden lg:block w-px self-stretch bg-gray-200" />
+
       <div className="flex flex-col flex-1">
         <div className="flex flex-row gap-8">
           {/* Mobile / tablet filters hamburger button */}
           {!filtersOpen && <button
             onClick={() => setFiltersOpen(true)}
-            className="lg:hidden p-2 mb-4 w-16"
+            className="lg:hidden p-2 mb-4 w-16 text-2xl hover:bg-gray-50"
           >
             ☰
           </button>}
@@ -59,7 +61,7 @@ const TopRatedRestaurants: React.FC = () => {
           />
         {visibleCount < filteredCount && (
           <button onClick={() => setVisibleCount(c => c + 5)}
-          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          className="mt-2 px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-600"
           >
             Show 5 more
           </button>
@@ -78,7 +80,7 @@ const TopRatedRestaurants: React.FC = () => {
           {/* Slide-in panel */}
           <div className="absolute left-0 top-0 h-full w-[80vw] max-w-sm bg-white p-4 overflow-auto">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="font-semibold text-lg">Filters</h2>
+              <h2 className="font-semibold text-xl">Filters</h2>
               <button onClick={() => setFiltersOpen(false)}>✕</button>
             </div>
 

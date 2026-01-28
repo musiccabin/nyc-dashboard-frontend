@@ -15,7 +15,7 @@ export function SortControls({
         <div className="flex gap-2">
           <button
             className={`px-3 py-1 rounded border ${
-              sortKey === "avg_rating" ? "bg-blue-500 text-white" : "bg-white text-gray-700"
+              sortKey === "avg_rating" ? "bg-teal-500 text-white hover:bg-teal-600 transition" : "bg-white text-gray-700 hover:bg-gray-50 transition"
             }`}
             onClick={() => setSortKey("avg_rating")}
           >
@@ -24,7 +24,7 @@ export function SortControls({
 
           <button
             className={`px-3 py-1 rounded border ${
-              sortKey === "avg_prep_time" ? "bg-blue-500 text-white" : "bg-white text-gray-700"
+              sortKey === "avg_prep_time" ? "bg-teal-500 text-white" : "bg-white text-gray-700 hover:bg-gray-50 transition"
             }`}
             onClick={() => setSortKey("avg_prep_time")}
           >
