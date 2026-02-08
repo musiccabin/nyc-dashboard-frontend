@@ -11,8 +11,10 @@ const TopRatedRestaurants: React.FC = () => {
   const [filtersOpen, setFiltersOpen] = useState(false)
 
   const {
-    data: sortedRestaurants,
+    data: visibleRestaurants,
     filteredCount,
+    selectedDay,
+    setSelectedDay,
     selectedCuisines,
     setSelectedCuisines,
     selectedRating,
@@ -30,23 +32,27 @@ const TopRatedRestaurants: React.FC = () => {
     <div className="flex gap-12 relative">
 
       {/* Desktop filters sidebar */}
-      <div className="hidden lg:block w-1/3 p-4">
-        <h2 className="font-semibold text-2xl mb-4">Filters</h2>
+      <div className="hidden lg:block w-1/3">
+        <h2 className="font-semibold text-2xl mb-3">Filters</h2>
         <Filters
+          selectedDay={selectedDay}
+          setSelectedDay={setSelectedDay}
           selectedCuisines={selectedCuisines}
           setSelectedCuisines={setSelectedCuisines}
           selectedRating={selectedRating}
           setSelectedRating={setSelectedRating}
           selectedCost={selectedCost}
           setSelectedCost={setSelectedCost}
+          sortKey={sortKey}
+          setSortKey={setSortKey}
         />
       </div>
 
       {/* Desktop vertical section divider */}
-      <div className="hidden lg:block w-px self-stretch bg-gray-200" />
+      <div className="hidden lg:block w-px self-stretch bg-gray-200 m-4" />
 
       <div className="flex flex-col flex-1">
-        <div className="flex flex-row gap-8 sticky top-0 bg-white z-10 p-4">
+        <div className="flex flex-row gap-8 sticky top-0 bg-white z-10 p-2">
           {/* Mobile/tablet: open filters panel */}
           {!filtersOpen && (
             <button
@@ -56,14 +62,17 @@ const TopRatedRestaurants: React.FC = () => {
               ☰
             </button>
           )}
-          {sortedRestaurants?.length > 0 &&
-            <SortControls sortKey={sortKey} setSortKey={setSortKey} />}
+          {visibleRestaurants?.length > 0 &&
+            <SortControls sortKey={sortKey} setSortKey={setSortKey} selectedDay={selectedDay} />}
         </div>
 
         {/* Display table of restaurants or a message when no data is available */}
-        {sortedRestaurants?.length > 0 ? (
+        {visibleRestaurants?.length > 0 ? (
           <div>
-          <RestaurantTable sortedRestaurants={sortedRestaurants} />
+          <RestaurantTable 
+            visibleRestaurants={visibleRestaurants} 
+            selectedDay={selectedDay}
+          />
           <InfiniteScroll
             visibleCount={visibleCount}
             filteredCount={filteredCount}
@@ -91,12 +100,16 @@ const TopRatedRestaurants: React.FC = () => {
             </div>
 
             <Filters
+              selectedDay={selectedDay}
+              setSelectedDay={setSelectedDay}
               selectedCuisines={selectedCuisines}
               setSelectedCuisines={setSelectedCuisines}
               selectedRating={selectedRating}
               setSelectedRating={setSelectedRating}
               selectedCost={selectedCost}
               setSelectedCost={setSelectedCost}
+              sortKey={sortKey}
+              setSortKey={setSortKey}
             />
           </div>
         </div>

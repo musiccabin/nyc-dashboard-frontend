@@ -8,7 +8,7 @@ interface CostSliderProps {
 export function CostSlider({ selectedCost, setSelectedCost }: CostSliderProps) {
   return (
     <div className='p-4'>
-        <span className="block font-semibold mb-2">Up to ${selectedCost}</span>
+        <span className="block font-semibold mb-3">Up to ${selectedCost}</span>
         <Slider.Root
             className="relative flex items-center w-full h-4 select-none touch-none"
             value={[selectedCost]}

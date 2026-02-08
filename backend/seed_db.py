@@ -57,9 +57,14 @@ cur.execute("""
         restaurant_name TEXT,
         cuisine_type TEXT,
         avg_rating REAL,
+        avg_weekday_rating REAL,
+        avg_weekend_rating REAL,
         avg_cost REAL,
         avg_prep_time REAL,
-        higher_day_type TEXT
+        avg_weekday_prep_time REAL,
+        avg_weekend_prep_time REAL,
+        higher_rating_day TEXT,
+        faster_prep_day TEXT
     );
     """)
 
@@ -71,36 +76,75 @@ cur.execute("""
         restaurant_name,
         cuisine_type,
         avg_rating,
+        avg_weekday_rating,
+        avg_weekend_rating,
         avg_cost,
         avg_prep_time,
-        higher_day_type
+        avg_weekday_prep_time,
+        avg_weekend_prep_time,
+        higher_rating_day,
+        faster_prep_day
+    )
+    WITH stats AS (
+        SELECT
+            restaurant_name,
+            cuisine_type,
+            AVG(cost_of_the_order) AS avg_cost,
+            AVG(rating) AS avg_rating,
+            AVG(food_preparation_time) AS avg_prep_time,
+            AVG(CASE WHEN day_of_the_week = 'Weekday' THEN rating END) AS avg_weekday_rating,
+            AVG(CASE WHEN day_of_the_week = 'Weekend' THEN rating END) AS avg_weekend_rating,
+            AVG(CASE WHEN day_of_the_week = 'Weekday' THEN food_preparation_time END) AS avg_weekday_prep_time,
+            AVG(CASE WHEN day_of_the_week = 'Weekend' THEN food_preparation_time END) AS avg_weekend_prep_time,
+            CASE
+                WHEN COUNT(CASE WHEN day_of_the_week = 'Weekday' THEN 1 END) >= 2
+                AND COUNT(CASE WHEN day_of_the_week = 'Weekend' THEN 1 END) >= 2
+                AND ABS(
+                    AVG(CASE WHEN day_of_the_week = 'Weekday' THEN rating END) -
+                    AVG(CASE WHEN day_of_the_week = 'Weekend' THEN rating END)
+                ) >= 0.2
+                THEN
+                    CASE
+                        WHEN AVG(CASE WHEN day_of_the_week = 'Weekday' THEN rating END) >
+                            AVG(CASE WHEN day_of_the_week = 'Weekend' THEN rating END)
+                        THEN 'Weekday'
+                        ELSE 'Weekend'
+                    END
+                ELSE NULL
+            END AS higher_rating_day,
+            CASE
+                WHEN COUNT(CASE WHEN day_of_the_week = 'Weekday' THEN 1 END) >= 2
+                AND COUNT(CASE WHEN day_of_the_week = 'Weekend' THEN 1 END) >= 2
+                AND ABS(
+                    AVG(CASE WHEN day_of_the_week = 'Weekday' THEN food_preparation_time END) -
+                    AVG(CASE WHEN day_of_the_week = 'Weekend' THEN food_preparation_time END)
+                ) >= 5
+                THEN
+                    CASE
+                        WHEN AVG(CASE WHEN day_of_the_week = 'Weekday' THEN food_preparation_time END) <
+                            AVG(CASE WHEN day_of_the_week = 'Weekend' THEN food_preparation_time END)
+                        THEN 'Weekday'
+                        ELSE 'Weekend'
+                    END
+                ELSE NULL
+            END AS faster_prep_day
+        FROM orders
+        GROUP BY restaurant_name
     )
     SELECT
         restaurant_name,
         cuisine_type,
-        AVG(rating) AS avg_rating,
-        AVG(cost_of_the_order) AS avg_cost,
-        AVG(food_preparation_time) AS avg_prep_time,
-        CASE
-            WHEN
-                COUNT(CASE WHEN day_of_the_week = 'Weekday' THEN 1 END) >= 2
-            AND COUNT(CASE WHEN day_of_the_week = 'Weekend' THEN 1 END) >= 2
-            AND ABS(
-                AVG(CASE WHEN day_of_the_week = 'Weekday' THEN rating END) -
-                AVG(CASE WHEN day_of_the_week = 'Weekend' THEN rating END)
-            ) >= 0.2
-            THEN
-                CASE
-                    WHEN AVG(CASE WHEN day_of_the_week = 'Weekday' THEN rating END)
-                    > AVG(CASE WHEN day_of_the_week = 'Weekend' THEN rating END)
-                    THEN 'Weekday'
-                    ELSE 'Weekend'
-                END
-            ELSE NULL
-        END AS higher_day_type
-    FROM orders
-    GROUP BY restaurant_name
-    HAVING COUNT(*) >= 2 AND AVG(rating) >= 3.5;
+        avg_rating,
+        avg_weekday_rating,
+        avg_weekend_rating,
+        avg_cost,
+        avg_prep_time,
+        avg_weekday_prep_time,
+        avg_weekend_prep_time,
+        higher_rating_day,
+        faster_prep_day
+    FROM stats
+    WHERE avg_rating >= 3.5;
     """)
 
 

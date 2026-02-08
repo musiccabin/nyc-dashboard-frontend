@@ -28,7 +28,7 @@ export function RatingSlider({ selectedRating, setSelectedRating }: RatingSlider
   
   return (
     <div>
-        <span className="block font-semibold mb-2">Rating:  ★ {selectedRating.toFixed(1)}+</span>
+        <span className="block font-semibold mb-3">Rating:  ★ {selectedRating.toFixed(1)}+</span>
         <Slider.Root
             ref={sliderRef}
             className="relative flex items-center w-full h-4 select-none touch-none"

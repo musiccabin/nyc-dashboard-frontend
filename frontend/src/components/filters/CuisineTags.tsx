@@ -28,7 +28,7 @@ export function CuisineTags({ selectedCuisines, setSelectedCuisines }: CuisineTa
           {cuisineOptions.map(c => (
             <button
               key={c}
-              className={`text-base px-3 py-1 border rounded ${
+              className={`text-sm px-3 py-1 border rounded ${
                 selectedCuisines.includes(c) ? "bg-teal-500 text-white hover:bg-teal-600 transition" : "bg-white text-gray-700 hover:bg-gray-50 transition"
               }`}
               onClick={() => {
